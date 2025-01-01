@@ -2,18 +2,24 @@ import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import ModelForProject from "./ModelForProject";
 import { useNavigate } from "react-router-dom";
-const SidenavContentHeaders = () => {
+const SidenavContentHeaders = ({setSelectedProject}) => {
   const initial = { name: "", isFavorite: false, color: "charcoal" };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
-  
-  const navigate  = useNavigate();
+
+  const navigate = useNavigate();
 
   return (
     <div>
-      <div className="flex justify-between" onClick={()=>navigate("/myprojects")}>
+      <div
+        className="flex justify-between"
+        onClick={() => {
+          navigate("/myprojects");
+          setSelectedProject("");
+        }}
+      >
         <p>My Projects</p>
         <div onClick={showModal}>
           <PlusOutlined />

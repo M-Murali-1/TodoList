@@ -20,7 +20,7 @@ const Projects = ({ data, selectedProject, setSelectedProject }) => {
         <Panel
           header={
             <div onClick={(e) => e.stopPropagation()}>
-              <SidenavContentHeaders />
+              <SidenavContentHeaders setSelectedProject={setSelectedProject}/>
             </div>
           }
           key="1"

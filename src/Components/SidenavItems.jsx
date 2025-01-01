@@ -8,12 +8,12 @@ const SidenavItems = ({
   projects,
   setProjects,
   stateChange,
-  
+  selectedProject,
+  setSelectedProject,
 }) => {
   // const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedProject, setSelectedProject] = useState("");
- 
+  
   useEffect(() => {
     console.log("stateChange updated: ", stateChange);
     getAllProjects(setProjects, setLoading);
@@ -23,24 +23,24 @@ const SidenavItems = ({
     return <h1>Loading</h1>;
   }
   return (
-      <div className="flex flex-col p-3 min-h-full  bg-sidenav">
-        <AddTask />
-        <Index
-          data={inbox[0]}
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-        />
-        <Favourites
-          data={projects}
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-        />
-        <Projects
-          data={projects}
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-        />
-      </div>
+    <div className="flex flex-col p-3 min-h-full  bg-sidenav">
+      <AddTask />
+      <Index
+        data={inbox[0]}
+        selectedProject={selectedProject}
+        setSelectedProject={setSelectedProject}
+      />
+      <Favourites
+        data={projects}
+        selectedProject={selectedProject}
+        setSelectedProject={setSelectedProject}
+      />
+      <Projects
+        data={projects}
+        selectedProject={selectedProject}
+        setSelectedProject={setSelectedProject}
+      />
+    </div>
   );
 };
 

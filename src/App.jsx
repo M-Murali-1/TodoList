@@ -9,6 +9,8 @@ import SingleProjectDetails from "./Components/SingleProjectDetails";
 const App = () => {
   const [projects, setProjects] = useState([]);
   const [stateChange, setStateChange] = useState(false);
+  const [selectedProject, setSelectedProject] = useState("");
+
   function handleStateChange() {
     setStateChange(!stateChange);
   }
@@ -25,15 +27,26 @@ const App = () => {
             projects={projects}
             setProjects={setProjects}
             stateChange={stateChange}
+            selectedProject={selectedProject}
+            setSelectedProject={setSelectedProject}
           />
         </Splitter.Panel>
         <Splitter.Panel>
           <Routes>
             <Route
               path="/myprojects"
-              element={<MyProjects data={withoutInbox} />}
+              element={
+                <MyProjects
+                  data={withoutInbox}
+                  selectedProject={selectedProject}
+                  setSelectedProject={setSelectedProject}
+                />
+              }
             />
-            <Route path="/myprojects/:project" element={<SingleProjectDetails data={withoutInbox}/>}/>
+            <Route
+              path="/myprojects/:project"
+              element={<SingleProjectDetails data={withoutInbox} />}
+            />
           </Routes>
         </Splitter.Panel>
       </Splitter>

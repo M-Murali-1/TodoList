@@ -5,8 +5,8 @@ import MoreOptionsModel from "./MoreOptionsModel";
 import { useNavigate } from "react-router-dom";
 const IndividualProject = ({
   list,
-  selectedProject = "none",
-  setSelectedProject = () => {},
+  selectedProject,
+  setSelectedProject 
 }) => {
   
   const [moreOptions, setMoreOptions] = useState(false);
@@ -24,9 +24,8 @@ const IndividualProject = ({
     console.log(selectedProject, moreOptions);
   }
   function handleSelectedProject(element) {
-    if (selectedProject != "none") {
+    
       setSelectedProject(element.id);
-    }
     navigate(`/myprojects/${element.name}`);
   }
   console.log(selectedProject, moreOptions, "this is the data");

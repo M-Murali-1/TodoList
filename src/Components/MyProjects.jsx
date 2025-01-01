@@ -5,7 +5,8 @@ import IndividualProject from "./IndividualProject";
 import { filterData } from "./apiOperations";
 import ModelForProject from "./ModelForProject";
 const { Search } = Input;
-const MyProjects = ({ data }) => {
+const MyProjects = ({ data,selectedProject,setSelectedProject}) => {
+  
   console.log("rerendering..! the component after this time");
   const [searchText, setSearchText] = useState("");
   const initial = { name: "", isFavorite: false, color: "charcoal" };
@@ -39,11 +40,18 @@ const MyProjects = ({ data }) => {
           prefix={<SearchOutlined />}
         />
         <div className="text-right ">
-          <PlusOutlined className="hover:bg-hover_sidenav p-2 rounded cursor-pointer" onClick={showModal}/>
+          <PlusOutlined
+            className="hover:bg-hover_sidenav p-2 rounded cursor-pointer"
+            onClick={showModal}
+          />
         </div>
 
         <p className="font-semibold">{searchData.length} Projects</p>
-        <IndividualProject list={searchData} />
+        <IndividualProject
+          list={searchData}
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+        />
       </div>
       <ModelForProject
         title={"Add Project"}
