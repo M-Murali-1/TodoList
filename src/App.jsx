@@ -5,6 +5,7 @@ import { getWithoutInbox } from "./Components/apiOperations";
 import { StateChangeContext } from "./Components/StateChangeContext";
 import { Route, Routes } from "react-router-dom";
 import MyProjects from "./Components/MyProjects";
+import SingleProjectDetails from "./Components/SingleProjectDetails";
 const App = () => {
   const [projects, setProjects] = useState([]);
   const [stateChange, setStateChange] = useState(false);
@@ -32,6 +33,7 @@ const App = () => {
               path="/myprojects"
               element={<MyProjects data={withoutInbox} />}
             />
+            <Route path="/myprojects/:project" element={<SingleProjectDetails data={withoutInbox}/>}/>
           </Routes>
         </Splitter.Panel>
       </Splitter>

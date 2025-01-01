@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import hash from "../assets/hash.svg";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
-import { useActionState } from "react";
 import MoreOptionsModel from "./MoreOptionsModel";
+import { useNavigate } from "react-router-dom";
 const IndividualProject = ({
   list,
   selectedProject = "none",
   setSelectedProject = () => {},
 }) => {
+  
   const [moreOptions, setMoreOptions] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const navigate = useNavigate();
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -23,12 +23,11 @@ const IndividualProject = ({
     setMoreOptions(true);
     console.log(selectedProject, moreOptions);
   }
-  function handleSelectedProject(id) {
+  function handleSelectedProject(element) {
     if (selectedProject != "none") {
-      setSelectedProject(id);
+      setSelectedProject(element.id);
     }
-    // setMoreOptions(false);
-    //console.log("the id is : ", id);
+    navigate(`/myprojects/${element.name}`);
   }
   console.log(selectedProject, moreOptions, "this is the data");
 
@@ -40,7 +39,7 @@ const IndividualProject = ({
           .map((element) => (
             <div
               key={element.id}
-              onClick={() => handleSelectedProject(element.id)}
+              onClick={() => handleSelectedProject(element)}
               className={`group  cursor-pointer flex justify-between items-baseline px-2 py-1 rounded-lg ${
                 selectedProject === element.id
                   ? "bg-select_sidenav"
