@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import { Input } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import IndividualProject from "./IndividualProject";
-import { filterData } from "./apiOperations";
 import ModelForProject from "./ModelForProject";
-const { Search } = Input;
-const MyProjects = ({ data,selectedProject,setSelectedProject}) => {
-  
-  console.log("rerendering..! the component after this time");
-  const [searchText, setSearchText] = useState("");
+const MyProjects = ({ data, selectedProject, setSelectedProject }) => {
   const initial = { name: "", isFavorite: false, color: "charcoal" };
+  const [searchText, setSearchText] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -24,9 +20,6 @@ const MyProjects = ({ data,selectedProject,setSelectedProject}) => {
       element.name.toLowerCase().includes(searchText.toLowerCase())
     );
   }
-  console.log(searchData, "after filtering");
-
-  console.log(searchText, "this is the cotent");
 
   return (
     <div className="flex justify-center w-full">

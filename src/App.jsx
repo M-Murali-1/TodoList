@@ -8,15 +8,10 @@ import MyProjects from "./Components/MyProjects";
 import SingleProjectDetails from "./Components/SingleProjectDetails";
 const App = () => {
   const [projects, setProjects] = useState([]);
-  const [stateChange, setStateChange] = useState(false);
   const [selectedProject, setSelectedProject] = useState("");
-
-  function handleStateChange() {
-    setStateChange(!stateChange);
-  }
   const withoutInbox = getWithoutInbox(projects);
   return (
-    <StateChangeContext handleStateChange={handleStateChange}>
+    <StateChangeContext projects={projects} setProjects={setProjects}>
       <Splitter
         style={{
           height: "100vh",
@@ -26,7 +21,6 @@ const App = () => {
           <SidenavItems
             projects={projects}
             setProjects={setProjects}
-            stateChange={stateChange}
             selectedProject={selectedProject}
             setSelectedProject={setSelectedProject}
           />

@@ -1,17 +1,40 @@
-import React from 'react'
-import { PlusCircleFilled } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
-const AddTask = () => {
-    const navigate = useNavigate();
-  return (
-    <div
-      className={`flex gap-3 cursor-pointer p-2 rounded-lg text-addbutton hover:bg-hover_sidenav`}
-      onClick={()=>navigate(`/todo`)}
-    >
-      <PlusCircleFilled className="text-lg" />
-      <p>Add Task</p>
-    </div>
-  )
-}
+import React, { useState } from "react";
+import { PlusCircleFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "antd";
+import AddIndividualTask from "./AddIndividualTask";
+const AddTask = ({ data }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigate = useNavigate();
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
-export default AddTask
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+  return (
+    <>
+      <div
+        className={`flex gap-3 cursor-pointer p-2 rounded-lg text-addbutton hover:bg-hover_sidenav`}
+        onClick={showModal}
+      >
+        <PlusCircleFilled className="text-lg" />
+        <p>Add Task</p>
+      </div>
+      {isModalVisible && (
+        <Modal
+          title={null}
+          open={isModalVisible}
+          onCancel={closeModal}
+          footer={null}
+          closable={false}
+        >
+          <AddIndividualTask projects={data} />
+        </Modal>
+      )}
+    </>
+  );
+};
+
+export default AddTask;

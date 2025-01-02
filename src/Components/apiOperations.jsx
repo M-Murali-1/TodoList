@@ -1,47 +1,56 @@
 import { TodoistApi } from "@doist/todoist-api-typescript";
 const api = new TodoistApi("14e22f56fadd08cdc9be1df7443ca10afaf40262");
 
-export function addProjectTodo(newProject, handleStateChange) {
-  console.log("in the add project : ", newProject);
-
+export function addProjectTodo(newProject, setProjects, projects) {
   api
     .addProject(newProject)
     .then((project) => {
-      console.log(project);
-      handleStateChange();
+      setProjects((prev) => [...prev, project]);
     })
     .catch((error) => console.log(error));
 }
 
-export function removeProjectTodo(projectID, handleStateChange) {
+export function removeProjectTodo(projectID, projects, setProjects) {
   api
     .deleteProject(projectID)
     .then((isSuccess) => {
-      console.log(isSuccess);
-      handleStateChange();
+      let data = projects.filter((element) => element.id !== projectID);
+      setProjects(data);
     })
     .catch((error) => console.log(error));
 }
 
-export function updateIsFavorite(projectID, status, handleStateChange) {
+export function updateIsFavorite(projectID, status, projects, setProjects) {
   api
     .updateProject(projectID, { isFavorite: `${!status}` })
     .then((isSuccess) => {
-      console.log(isSuccess);
-      handleStateChange();
+      let data = projects.map((element) => {
+        if (element.id === projectID) {
+          return isSuccess;
+        }
+        return element;
+      });
+      setProjects(data);
     })
     .catch((error) => console.log(error));
-  // console.log(projectID,status,!status);
 }
 
-export function updateProjectTodo(element, handleStateChange) {
+export function updateProjectTodo(project, setProjects, projects) {
   api
-    .updateProject(element.id, {
-      name: element.name,
-      isFavorite: `${element.isFavorite}`,
-      color: element.color,
+    .updateProject(project.id, {
+      name: project.name,
+      isFavorite: `${project.isFavorite}`,
+      color: project.color,
     })
-    .then((isSuccess) => handleStateChange())
+    .then((isSuccess) => {
+      let data = projects.map((element) => {
+        if (element.id === project.id) {
+          return isSuccess;
+        }
+        return element;
+      });
+      setProjects(data);
+    })
     .catch((error) => console.log(error));
 }
 

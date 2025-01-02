@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import Index from "./Index";
-import { getAllProjects, getInbox } from "./apiOperations";
+import { getAllProjects, getInbox,getWithoutInbox } from "./apiOperations";
 import Favourites from "./Favourites";
 import Projects from "./Projects";
 import AddTask from "./AddTask";
 const SidenavItems = ({
   projects,
   setProjects,
-  stateChange,
   selectedProject,
   setSelectedProject,
 }) => {
@@ -15,16 +14,16 @@ const SidenavItems = ({
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    console.log("stateChange updated: ", stateChange);
     getAllProjects(setProjects, setLoading);
-  }, [stateChange]);
+  }, []);
   let inbox = getInbox(projects);
+  let withoutInbox = getWithoutInbox(projects);
   if (loading) {
     return <h1>Loading</h1>;
   }
   return (
     <div className="flex flex-col p-3 min-h-full  bg-sidenav">
-      <AddTask />
+      <AddTask data={projects}/>
       <Index
         data={inbox[0]}
         selectedProject={selectedProject}

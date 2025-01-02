@@ -1,22 +1,23 @@
-import { useState, useContext } from "react";
+import ModelForProject from "./ModelForProject";
+import StateContext from "./StateChangeContext";
 import { Menu } from "antd";
+import { useState, useContext } from "react";
+import { removeProjectTodo, updateIsFavorite } from "./apiOperations";
 import {
   EditOutlined,
   HeartFilled,
   HeartOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { removeProjectTodo, updateIsFavorite } from "./apiOperations";
-import ModelForProject from "./ModelForProject";
-import StateContext from "./StateChangeContext";
 
 const MoreOptionsModel = ({ element }) => {
-  console.log("This is the more data", element.isFavorite);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { projects, setProjects } = useContext(StateContext);
+
+  // Function for enabling the model.
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleStateChange = useContext(StateContext);
 
   return (
     <div className="relative left-10">
@@ -35,7 +36,9 @@ const MoreOptionsModel = ({ element }) => {
               updateIsFavorite(
                 element.id,
                 element.isFavorite,
-                handleStateChange
+                // {...element,isFavorite: !element.isFavorite},
+                projects,
+                setProjects
               );
             }}
           >
@@ -49,7 +52,7 @@ const MoreOptionsModel = ({ element }) => {
         <Menu.Item key="3">
           <div
             className="flex gap-5 text-red"
-            onClick={() => removeProjectTodo(element.id, handleStateChange)}
+            onClick={() => removeProjectTodo(element.id, projects, setProjects)}
           >
             <DeleteOutlined />
             <p>Delete</p>

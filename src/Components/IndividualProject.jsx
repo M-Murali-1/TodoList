@@ -10,19 +10,20 @@ const IndividualProject = ({
 }) => {
   
   const [moreOptions, setMoreOptions] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  // const showModal = () => {
+  //   setIsModalVisible(true);
+  // };
 
-  const handleClose = () => {
-    setIsModalVisible(false);
-  };
-  function handleMoreOptions(e) {
-    setMoreOptions(true);
-    console.log(selectedProject, moreOptions);
-  }
+  // const handleClose = () => {
+  //   setIsModalVisible(false);
+  // };
+  // function handleMoreOptions(e) {
+  //   setMoreOptions(true);
+  //   console.log(selectedProject, moreOptions);
+    
+  // }
   function handleSelectedProject(element) {
     
       setSelectedProject(element.id);
@@ -55,7 +56,7 @@ const IndividualProject = ({
                   {element.name}
                 </p>
               </div>
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e)=>e.stopPropagation()}>
                 <Dropdown
                   trigger={["click"]}
                   overlay={<MoreOptionsModel element={element} />}

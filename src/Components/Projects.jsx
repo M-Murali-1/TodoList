@@ -4,9 +4,7 @@ import IndividualProject from "./IndividualProject";
 import SidenavContentHeaders from "./SidenavContentHeaders";
 
 const Projects = ({ data, selectedProject, setSelectedProject }) => {
-  function handleChange() {
-    console.log("Hello");
-  }
+  
   return (
     <div>
       <Collapse
