@@ -40,6 +40,7 @@ const MyProjects = ({ data, selectedProject, setSelectedProject }) => {
         </div>
 
         <p className="font-semibold">{searchData.length} Projects</p>
+        <hr/>
         <IndividualProject
           list={searchData}
           selectedProject={selectedProject}
