@@ -1,17 +1,26 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import Input from "antd/es/input/Input";
 import { Button, Select } from "antd";
-import { addTaskTodo } from "./apiOperations";
+import { addTaskTodo,updateTaskTodo } from "./apiOperations";
 import StateContext from "./StateChangeContext";
 const { Option } = Select;
-const AddIndividualTask = ({ projects, onCancel, selectedProject }) => {
+const AddIndividualTask = ({
+  projects,
+  onCancel,
+  selectedProject,
+  initial = { content: "", description: "", projectId: selectedProject },
+}) => {
   console.log(projects);
-  const {tasks,setTasks} = useContext(StateContext);
-  const initial = { content: "", description: "", projectId: selectedProject };
-  console.log("The selected project id :",selectedProject);
-  
+  console.log("individual in the adding", initial);
+
+  const { tasks, setTasks } = useContext(StateContext);
+  //const initial = { content: "", description: "", projectId: selectedProject };
+  console.log("The selected project id :", selectedProject);
+
   const [task, setTask] = useState(initial);
   console.log(task);
+  console.log(initial.id);
+
   function handleNameChange(e) {
     setTask({ ...task, content: e.target.value });
     console.log("Updated task :", task);
@@ -21,8 +30,13 @@ const AddIndividualTask = ({ projects, onCancel, selectedProject }) => {
   }
   function handleSubmit() {
     console.log(task);
-    addTaskTodo(task,tasks,setTasks);
-    setTask(initial);
+    if (initial.id != undefined) {
+      console.log("This is the updation");
+      updateTaskTodo(task, tasks, setTasks);
+    } else {
+      addTaskTodo(task, tasks, setTasks);
+    }
+    //setTask(initial);
     onCancel();
   }
   function handleProjectChange(value) {

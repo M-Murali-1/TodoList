@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import IndividualProject from "./IndividualProject";
+import IndividualProject from "./IndividualProjectOperations";
 import ModelForProject from "./ModelForProject";
 const MyProjects = ({ data, selectedProject, setSelectedProject }) => {
   const initial = { name: "", isFavorite: false, color: "charcoal" };
@@ -40,7 +40,7 @@ const MyProjects = ({ data, selectedProject, setSelectedProject }) => {
         </div>
 
         <p className="font-semibold">{searchData.length} Projects</p>
-        <hr/>
+        <hr />
         <IndividualProject
           list={searchData}
           selectedProject={selectedProject}

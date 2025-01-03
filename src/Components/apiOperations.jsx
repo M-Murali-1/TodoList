@@ -104,12 +104,56 @@ export function filterData(data, value) {
   return searchData;
 }
 
-export function addTaskTodo(task,tasks,setTasks) {
+export function addTaskTodo(task, tasks, setTasks) {
   api
     .addTask(task)
     .then((addedTask) => {
       console.log(addedTask);
-      setTasks((prev)=>[...prev,addedTask])
+      setTasks((prev) => [...prev, addedTask]);
     })
     .catch((error) => console.log(error.message));
+}
+
+export function removeTaskTodo(taskID, tasks, setTasks) {
+  api
+    .deleteTask(taskID)
+    .then((isSuccess) => {
+      console.log(isSuccess);
+      let updatedTasks = tasks.filter((element) => element.id != taskID);
+      setTasks(updatedTasks);
+    })
+    .catch((error) => console.log(error));
+}
+
+export function updateTaskTodo(task, tasks, setTasks) {
+  api
+    .updateTask(task.id, {
+      content: task.content,
+      description: task.description,
+      projectId: task.projectId,
+    })
+    .then((isSuccess) => {
+      console.log(isSuccess);
+      let updated = tasks.map(element=>{
+        if(element.id===task.id) {
+          return isSuccess;
+        }
+        else {
+          return element;
+        }
+      })
+      setTasks(updated);
+    })
+    .catch((error) => console.log(error));
+}
+
+export function closeTaskTodo(taskID,tasks,setTasks) {
+  console.log("the project had been closed");
+  api.closeTask(taskID)
+    .then((isSuccess) => {console.log(isSuccess)
+      let updated = tasks.filter(element=>element.id!=taskID)
+      setTasks(updated);
+    })
+    .catch((error) => console.log(error))
+  
 }

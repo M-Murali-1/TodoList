@@ -1,10 +1,9 @@
 import { Collapse } from "antd";
 const { Panel } = Collapse;
-import IndividualProject from "./IndividualProject";
+import IndividualProject from "./IndividualProjectOperations";
 import SidenavContentHeaders from "./SidenavContentHeaders";
 
 const Projects = ({ data, selectedProject, setSelectedProject }) => {
-  
   return (
     <div>
       <Collapse
@@ -13,12 +12,11 @@ const Projects = ({ data, selectedProject, setSelectedProject }) => {
         expandIconPosition="end"
         bordered={false}
         className="bg-sidenav"
-        
       >
         <Panel
           header={
             <div onClick={(e) => e.stopPropagation()}>
-              <SidenavContentHeaders setSelectedProject={setSelectedProject}/>
+              <SidenavContentHeaders setSelectedProject={setSelectedProject} />
             </div>
           }
           key="1"

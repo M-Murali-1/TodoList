@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
-import MoreOptionsModel from "./MoreOptionsModel";
+import MoreOptionsModel from "./MoreOptionsModelProjects";
 import { useNavigate } from "react-router-dom";
 const IndividualProject = ({
   list,
