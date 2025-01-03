@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Input from "antd/es/input/Input";
 import { Button, Select } from "antd";
-import { addTaskTodo,updateTaskTodo } from "./apiOperations";
+import { addTaskTodo, updateTaskTodo } from "./apiOperations";
 import StateContext from "./StateChangeContext";
 const { Option } = Select;
 const AddIndividualTask = ({
@@ -9,6 +9,7 @@ const AddIndividualTask = ({
   onCancel,
   selectedProject,
   initial = { content: "", description: "", projectId: selectedProject },
+  okButton = "Add Task",
 }) => {
   console.log(projects);
   console.log("individual in the adding", initial);
@@ -81,7 +82,7 @@ const AddIndividualTask = ({
             className={`bg-addbutton`}
             onClick={handleSubmit}
           >
-            Add Task
+            {okButton}
           </Button>
         </div>
       </div>

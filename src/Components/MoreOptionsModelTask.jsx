@@ -8,12 +8,12 @@ const MoreOptionsModelTask = ({ element }) => {
   return (
     <div>
       <Menu>
-        <Menu.Item key="1">
+        {/* <Menu.Item key="1">
           <div className="flex gap-5">
             <EditOutlined />
             <p>Edit</p>
           </div>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="2">
           <div
             className="flex gap-5 text-red"

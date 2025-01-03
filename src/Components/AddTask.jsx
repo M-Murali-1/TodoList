@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import AddIndividualTask from "./AddIndividualTask";
-const AddTask = ({ data,selectedProject }) => {
+import StateContext from "./StateChangeContext";
+const AddTask = ({ data, selectedProject }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
+  const { setSelectedTask } = useContext(StateContext);
   const showModal = () => {
     setIsModalVisible(true);
+    setSelectedTask("");
   };
 
   const closeModal = () => {
@@ -30,7 +33,11 @@ const AddTask = ({ data,selectedProject }) => {
           footer={null}
           closable={false}
         >
-          <AddIndividualTask projects={data} onCancel={closeModal} selectedProject={selectedProject}/>
+          <AddIndividualTask
+            projects={data}
+            onCancel={closeModal}
+            selectedProject={selectedProject}
+          />
         </Modal>
       )}
     </>

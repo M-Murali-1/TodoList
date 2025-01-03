@@ -18,6 +18,7 @@ const App = () => {
     console.log("the tasks are :",tasks);
     
   const [selectedProject, setSelectedProject] = useState("");
+  const [selectedTask,setSelectedTask] = useState("");
   const withoutInbox = getWithoutInbox(projects);
   return (
     <StateChangeContext
@@ -29,6 +30,8 @@ const App = () => {
       taskLoading={taskLoading}
       tasks={tasks}
       setTasks={setTasks}
+      selectedTask={selectedTask}
+      setSelectedTask={setSelectedTask}
     >
       <Splitter
         style={{

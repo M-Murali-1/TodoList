@@ -8,8 +8,14 @@ import { PlusCircleFilled, PlusCircleOutlined } from "@ant-design/icons";
 import AddIndividualTask from "./AddIndividualTask";
 import IndividualTaskOperations from "./IndividualTaskOperations";
 const SingleProjectDetails = ({ data }) => {
-  const { setSelectedProject, setProjects, projects, tasks, selectedProject } =
-    useContext(StateContext);
+  const {
+    setSelectedProject,
+    setProjects,
+    projects,
+    tasks,
+    selectedProject,
+    setSelectedTask,
+  } = useContext(StateContext);
   let [isAddTaskVisible, setIsAddTaskVisible] = useState(false);
   console.log(tasks, "in the single page ");
   console.log("the selected project is :", selectedProject);
@@ -42,6 +48,7 @@ const SingleProjectDetails = ({ data }) => {
   }
   function showAddTask() {
     setIsAddTaskVisible(true);
+    setSelectedTask("");
   }
   function closeAddtask() {
     setIsAddTaskVisible(false);

@@ -11,6 +11,8 @@ export const StateChangeContext = ({
   taskLoading,
   tasks,
   setTasks,
+  selectedTask,
+  setSelectedTask,
 }) => {
   return (
     <StateContext.Provider
@@ -23,6 +25,8 @@ export const StateChangeContext = ({
         taskLoading,
         tasks,
         setTasks,
+        selectedTask,
+        setSelectedTask,
       }}
     >
       {children}
