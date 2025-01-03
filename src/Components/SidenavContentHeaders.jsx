@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 const SidenavContentHeaders = ({setSelectedProject}) => {
   const initial = { name: "", isFavorite: false, color: "charcoal" };
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
+  const showModal = (e) => {
     setIsModalOpen(true);
+    e.stopPropagation();
   };
 
   const navigate = useNavigate();

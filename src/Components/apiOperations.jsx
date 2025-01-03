@@ -70,6 +70,17 @@ export function getAllProjects(setProjects, setLoading) {
     .catch((error) => console.log(error));
 }
 
+export function getAllTasks(setTasks, setTaskLoading) {
+  api
+    .getTasks()
+    .then((tasks) => {
+      console.log(tasks);
+      setTasks(tasks);
+      setTaskLoading(false);
+    })
+    .catch((error) => console.log(error));
+}
+
 export function getInbox(data) {
   let inbox = data.filter((element) => element.name === "Inbox");
   return inbox;
@@ -91,4 +102,14 @@ export function filterData(data, value) {
     }
   });
   return searchData;
+}
+
+export function addTaskTodo(task,tasks,setTasks) {
+  api
+    .addTask(task)
+    .then((addedTask) => {
+      console.log(addedTask);
+      setTasks((prev)=>[...prev,addedTask])
+    })
+    .catch((error) => console.log(error.message));
 }

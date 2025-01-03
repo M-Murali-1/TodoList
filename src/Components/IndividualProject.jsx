@@ -27,7 +27,7 @@ const IndividualProject = ({
   function handleSelectedProject(element) {
     
       setSelectedProject(element.id);
-    navigate(`/myprojects/${element.name}`);
+    navigate(`/myprojects/${element.id}`);
   }
   console.log(selectedProject, moreOptions, "this is the data");
 

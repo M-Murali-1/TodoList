@@ -1,29 +1,42 @@
 import { Splitter } from "antd";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import SidenavItems from "./Components/SidenavItems";
-import { getWithoutInbox } from "./Components/apiOperations";
+import { getWithoutInbox,getAllProjects, getAllTasks } from "./Components/apiOperations";
 import { StateChangeContext } from "./Components/StateChangeContext";
 import { Route, Routes } from "react-router-dom";
 import MyProjects from "./Components/MyProjects";
 import SingleProjectDetails from "./Components/SingleProjectDetails";
 const App = () => {
   const [projects, setProjects] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [taskLoading,setTaskLoading] = useState(true);
+    useEffect(() => {
+      getAllProjects(setProjects,setLoading);
+      getAllTasks(setTasks,setTaskLoading);
+    }, []);
+    console.log("the tasks are :",tasks);
+    
   const [selectedProject, setSelectedProject] = useState("");
   const withoutInbox = getWithoutInbox(projects);
   return (
-    <StateChangeContext projects={projects} setProjects={setProjects}>
+    <StateChangeContext
+      projects={projects}
+      setProjects={setProjects}
+      selectedProject={selectedProject}
+      setSelectedProject={setSelectedProject}
+      loading={loading}
+      taskLoading={taskLoading}
+      tasks={tasks}
+      setTasks={setTasks}
+    >
       <Splitter
         style={{
           height: "100vh",
         }}
       >
         <Splitter.Panel defaultSize="20%" min="15%" max="30%">
-          <SidenavItems
-            projects={projects}
-            setProjects={setProjects}
-            selectedProject={selectedProject}
-            setSelectedProject={setSelectedProject}
-          />
+          <SidenavItems />
         </Splitter.Panel>
         <Splitter.Panel>
           <Routes>

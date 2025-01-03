@@ -1,21 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Index from "./Index";
-import { getAllProjects, getInbox,getWithoutInbox } from "./apiOperations";
+import { getAllProjects, getInbox, getWithoutInbox } from "./apiOperations";
 import Favourites from "./Favourites";
 import Projects from "./Projects";
 import AddTask from "./AddTask";
-const SidenavItems = ({
-  projects,
-  setProjects,
-  selectedProject,
-  setSelectedProject,
-}) => {
-  // const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    getAllProjects(setProjects, setLoading);
-  }, []);
+import StateContext from "./StateChangeContext";
+const SidenavItems = () => {
+  const { projects, setProjects, selectedProject, setSelectedProject,loading } =
+    useContext(StateContext);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   getAllProjects(setProjects, setLoading);
+  // }, []);
   let inbox = getInbox(projects);
   let withoutInbox = getWithoutInbox(projects);
   if (loading) {
@@ -23,7 +20,7 @@ const SidenavItems = ({
   }
   return (
     <div className="flex flex-col p-3 min-h-full  bg-sidenav">
-      <AddTask data={projects}/>
+      <AddTask data={projects} selectedProject={selectedProject} />
       <Index
         data={inbox[0]}
         selectedProject={selectedProject}
