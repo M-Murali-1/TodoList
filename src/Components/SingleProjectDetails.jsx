@@ -28,16 +28,16 @@ const SingleProjectDetails = ({ data }) => {
   let [projectSelected] = projects.filter((element) => {
     return element.id === project;
   });
-
+  if (!projectSelected) {
+    return <div>Project not found!</div>;
+  }
   let projectTasks = tasks.filter(
     (element) => element.projectId == projectSelected.id
   );
   //console.log(projectTasks, "in the selected tasks","the project is is ",projectSelected.id,project);
   //selectedProject(projectSelected.id);
   //console.log("The selected project is ",projectSelected.name);
-  if (!projectSelected) {
-    return <div>Project not found!</div>;
-  }
+
   function handleMyProjects() {
     setSelectedProject("");
   }
