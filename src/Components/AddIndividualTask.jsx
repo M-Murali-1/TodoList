@@ -66,7 +66,8 @@ const AddIndividualTask = ({
           <Button onClick={onCancel}>Cancel</Button>
           <Button
             type="primary"
-            className={`bg-addbutton`}
+            className={`bg-addbutton opacity-70 disabled:bg-addbutton disabled:opacity-30 disabled:text-white`}
+            disabled={task.content.length === 0}
             onClick={handleSubmit}
           >
             {okButton}
