@@ -1,24 +1,26 @@
 import { Modal } from "antd";
-import { useState,useContext } from "react";
-import { addProjectTodo,updateProjectTodo } from "./apiOperations";
+import { useState, useContext } from "react";
+import { addProjectTodo, updateProjectTodo } from "./apiOperations";
 import AddProject from "./AddProject";
 import StateContext from "./StateChangeContext";
 
-const ModelForProject = ({ isModalOpen, setIsModalOpen, initial, title,okButtonText }) => {
+const ModelForProject = ({
+  isModalOpen,
+  setIsModalOpen,
+  initial,
+  title,
+  okButtonText,
+}) => {
   const [project, setProject] = useState(initial);
   // Calling the handlingstate change function which will reload the page again.
-  const {projects,setProjects} = useContext(StateContext);
-  
+  const { projects, setProjects } = useContext(StateContext);
+
   const handleOk = () => {
     setIsModalOpen(false);
-    if(project.id!=undefined) {
-      console.log("updating the project..!");
-      console.log(project);
-      updateProjectTodo(project,setProjects,projects);
-    }
-    else {
-      console.log("Adding the project");
-      addProjectTodo(project,setProjects,projects);
+    if (project.id != undefined) {
+      updateProjectTodo(project, setProjects, projects);
+    } else {
+      addProjectTodo(project, setProjects, projects);
     }
     setProject(initial);
   };

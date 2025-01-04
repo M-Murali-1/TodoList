@@ -1,9 +1,8 @@
 import { Collapse } from "antd";
-const { Panel } = Collapse;
 import IndividualProject from "./IndividualProjectOperations";
 import SidenavContentHeaders from "./SidenavContentHeaders";
-
-const Projects = ({ data, selectedProject, setSelectedProject }) => {
+const { Panel } = Collapse;
+const Projects = () => {
   return (
     <div>
       <Collapse
@@ -16,16 +15,12 @@ const Projects = ({ data, selectedProject, setSelectedProject }) => {
         <Panel
           header={
             <div onClick={(e) => e.stopPropagation()}>
-              <SidenavContentHeaders setSelectedProject={setSelectedProject} />
+              <SidenavContentHeaders />
             </div>
           }
           key="1"
         >
-          <IndividualProject
-            list={data}
-            selectedProject={selectedProject}
-            setSelectedProject={setSelectedProject}
-          />
+          <IndividualProject />
         </Panel>
       </Collapse>
     </div>

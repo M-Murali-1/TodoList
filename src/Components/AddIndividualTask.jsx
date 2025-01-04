@@ -5,39 +5,26 @@ import { addTaskTodo, updateTaskTodo } from "./apiOperations";
 import StateContext from "./StateChangeContext";
 const { Option } = Select;
 const AddIndividualTask = ({
-  projects,
   onCancel,
   selectedProject,
   initial = { content: "", description: "", projectId: selectedProject },
   okButton = "Add Task",
 }) => {
-  console.log(projects);
-  console.log("individual in the adding", initial);
-
-  const { tasks, setTasks } = useContext(StateContext);
-  //const initial = { content: "", description: "", projectId: selectedProject };
-  console.log("The selected project id :", selectedProject);
-
+  const { tasks, setTasks, projects } = useContext(StateContext);
   const [task, setTask] = useState(initial);
-  console.log(task);
-  console.log(initial.id);
 
   function handleNameChange(e) {
     setTask({ ...task, content: e.target.value });
-    console.log("Updated task :", task);
   }
   function handleDescriptionChange(e) {
     setTask({ ...task, description: e.target.value });
   }
   function handleSubmit() {
-    console.log(task);
     if (initial.id != undefined) {
-      console.log("This is the updation");
       updateTaskTodo(task, tasks, setTasks);
     } else {
       addTaskTodo(task, tasks, setTasks);
     }
-    //setTask(initial);
     onCancel();
   }
   function handleProjectChange(value) {

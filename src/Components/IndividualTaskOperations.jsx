@@ -1,36 +1,25 @@
-import React, { useContext, useState } from "react";
-import { Radio, Checkbox, Dropdown } from "antd";
-import MoreOptionsModelTask from "./MoreOptionsModelTask";
+import { useContext, useState } from "react";
+import { Checkbox, Dropdown } from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { closeTaskTodo } from "./apiOperations";
+import MoreOptionsModelTask from "./MoreOptionsModelTask";
 import AddIndividualTask from "./AddIndividualTask";
 import StateContext from "./StateChangeContext";
-import { closeTaskTodo } from "./apiOperations";
 const IndividualTaskOperations = ({ element }) => {
-  const {
-    projects,
-    selectedProject,
-    tasks,
-    setTasks,
-    selectedTask,
-    setSelectedTask,
-  } = useContext(StateContext);
+  const { selectedProject, tasks, setTasks, selectedTask, setSelectedTask } =
+    useContext(StateContext);
   const [editable, setEditable] = useState(false);
+
   function handleEdit() {
-    console.log("Clicked on the eedit button");
     setEditable(true);
     setSelectedTask(element.id);
-  }
-  function handleMoreOptions() {
-    console.log("Hanle More options");
   }
   function handleCancel() {
     setEditable(false);
   }
   function handleChecked(e) {
-    console.log(e.target.value);
     closeTaskTodo(e.target.value, tasks, setTasks);
   }
-  console.log(selectedTask, "This is the selected task");
 
   return (
     <>
@@ -62,7 +51,6 @@ const IndividualTaskOperations = ({ element }) => {
       )}
       {editable && selectedTask === element.id && (
         <AddIndividualTask
-          projects={projects}
           onCancel={handleCancel}
           selectedProject={selectedProject}
           initial={element}

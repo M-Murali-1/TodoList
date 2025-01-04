@@ -1,40 +1,25 @@
-import React, { useState } from "react";
+import { useContext } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
 import MoreOptionsModel from "./MoreOptionsModelProjects";
 import { useNavigate } from "react-router-dom";
-const IndividualProject = ({
-  list,
-  selectedProject,
-  setSelectedProject 
-}) => {
-  
-  const [moreOptions, setMoreOptions] = useState(false);
-  // const [isModalVisible, setIsModalVisible] = useState(false);
+import StateContext from "./StateChangeContext";
+import { findFavourites } from "./apiOperations";
+const IndividualProject = ({type=""}) => {
   const navigate = useNavigate();
-  // const showModal = () => {
-  //   setIsModalVisible(true);
-  // };
 
-  // const handleClose = () => {
-  //   setIsModalVisible(false);
-  // };
-  // function handleMoreOptions(e) {
-  //   setMoreOptions(true);
-  //   console.log(selectedProject, moreOptions);
-    
-  // }
+  const { selectedProject, setSelectedProject,projects } = useContext(StateContext);
+  
+  let data = (type=="favourites")?findFavourites(projects):projects;
   function handleSelectedProject(element) {
-    
-      setSelectedProject(element.id);
+    setSelectedProject(element.id);
     navigate(`/myprojects/${element.id}`);
   }
-  console.log(selectedProject, moreOptions, "this is the data");
 
   return (
     <div>
       <ul>
-        {list
+        {data
           .filter((element) => element.name != "Inbox")
           .map((element) => (
             <div
@@ -56,7 +41,10 @@ const IndividualProject = ({
                   {element.name}
                 </p>
               </div>
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e)=>e.stopPropagation()}>
+              <div
+                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <Dropdown
                   trigger={["click"]}
                   overlay={<MoreOptionsModel element={element} />}
@@ -68,7 +56,6 @@ const IndividualProject = ({
             </div>
           ))}
       </ul>
-      {/* {isModalVisible?(<MoreOptionsModel isModalVisible={isModalVisible} handleClose={handleClose}/>):(<></>)} */}
     </div>
   );
 };

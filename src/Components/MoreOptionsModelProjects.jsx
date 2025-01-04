@@ -36,7 +36,6 @@ const MoreOptionsModel = ({ element }) => {
               updateIsFavorite(
                 element.id,
                 element.isFavorite,
-                // {...element,isFavorite: !element.isFavorite},
                 projects,
                 setProjects
               );

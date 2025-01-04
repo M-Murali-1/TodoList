@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import ModelForProject from "./ModelForProject";
 import { useNavigate } from "react-router-dom";
-const SidenavContentHeaders = ({setSelectedProject}) => {
+
+import StateContext from "./StateChangeContext";
+const SidenavContentHeaders = () => {
+  const { setSelectedProject } = useContext(StateContext);
+
   const initial = { name: "", isFavorite: false, color: "charcoal" };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = (e) => {

@@ -2,6 +2,8 @@ import { TodoistApi } from "@doist/todoist-api-typescript";
 const api = new TodoistApi("14e22f56fadd08cdc9be1df7443ca10afaf40262");
 
 export function addProjectTodo(newProject, setProjects, projects) {
+  console.log(newProject);
+  
   api
     .addProject(newProject)
     .then((project) => {
@@ -65,7 +67,6 @@ export function getAllProjects(setProjects, setLoading) {
     .then((projects) => {
       setProjects(projects);
       setLoading(false);
-      console.log("After the refreshing:", projects);
     })
     .catch((error) => console.log(error));
 }
@@ -92,8 +93,6 @@ export function getWithoutInbox(data) {
 }
 
 export function filterData(data, value) {
-  console.log("inside the filtering function,value", value);
-
   let searchData = data.filter((element) => {
     let nameLowercase = element.name.toLowerCase();
     if (nameLowercase.includes(value.toLowerCase())) {
@@ -134,26 +133,25 @@ export function updateTaskTodo(task, tasks, setTasks) {
     })
     .then((isSuccess) => {
       console.log(isSuccess);
-      let updated = tasks.map(element=>{
-        if(element.id===task.id) {
+      let updated = tasks.map((element) => {
+        if (element.id === task.id) {
           return isSuccess;
-        }
-        else {
+        } else {
           return element;
         }
-      })
+      });
       setTasks(updated);
     })
     .catch((error) => console.log(error));
 }
 
-export function closeTaskTodo(taskID,tasks,setTasks) {
-  console.log("the project had been closed");
-  api.closeTask(taskID)
-    .then((isSuccess) => {console.log(isSuccess)
-      let updated = tasks.filter(element=>element.id!=taskID)
+export function closeTaskTodo(taskID, tasks, setTasks) {
+  api
+    .closeTask(taskID)
+    .then((isSuccess) => {
+      console.log(isSuccess);
+      let updated = tasks.filter((element) => element.id != taskID);
       setTasks(updated);
     })
-    .catch((error) => console.log(error))
-  
+    .catch((error) => console.log(error));
 }

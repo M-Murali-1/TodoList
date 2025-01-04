@@ -1,10 +1,9 @@
-import React from "react";
 import colorOptions from "./colors";
-import { Flex, Input, Typography, Select } from "antd";
+import {Typography, Select } from "antd";
 
 const SelectColor = ({ handleColorChange, updatedColor }) => {
   return (
-    <div className="">
+    <>
       <Typography.Title level={5}>Color</Typography.Title>
       <Select
         value={updatedColor}
@@ -20,7 +19,7 @@ const SelectColor = ({ handleColorChange, updatedColor }) => {
           </Select.Option>
         ))}
       </Select>
-    </div>
+    </>
   );
 };
 

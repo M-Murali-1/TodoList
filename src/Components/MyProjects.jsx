@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import IndividualProject from "./IndividualProjectOperations";
 import ModelForProject from "./ModelForProject";
-const MyProjects = ({ data, selectedProject, setSelectedProject }) => {
+const MyProjects = ({ data }) => {
   const initial = { name: "", isFavorite: false, color: "charcoal" };
   const [searchText, setSearchText] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,11 +41,7 @@ const MyProjects = ({ data, selectedProject, setSelectedProject }) => {
 
         <p className="font-semibold">{searchData.length} Projects</p>
         <hr />
-        <IndividualProject
-          list={searchData}
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-        />
+        <IndividualProject list={searchData} />
       </div>
       <ModelForProject
         title={"Add Project"}

@@ -1,8 +1,11 @@
 import { InboxOutlined } from "@ant-design/icons";
-const Index = ({ data, selectedProject, setSelectedProject }) => {
+import StateContext from "./StateChangeContext";
+import { useContext } from "react";
+const Index = ({ data }) => {
   function handleInboxChange() {
     setSelectedProject(data.id);
   }
+  const { selectedProject, setSelectedProject } = useContext(StateContext);
 
   return (
     <div

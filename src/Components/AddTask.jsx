@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import AddIndividualTask from "./AddIndividualTask";
 import StateContext from "./StateChangeContext";
-const AddTask = ({ data, selectedProject }) => {
+const AddTask = ({ data }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
-  const { setSelectedTask } = useContext(StateContext);
+  const { setSelectedTask,selectedProject } = useContext(StateContext);
   const showModal = () => {
     setIsModalVisible(true);
     setSelectedTask("");

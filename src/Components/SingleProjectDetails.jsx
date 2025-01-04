@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import StateContext from "./StateChangeContext";
-import SingleProjectPageheader from "./SingleProjectPageheader";
-import { Radio, Typography } from "antd";
+import { Typography } from "antd";
 import { updateProjectTodo } from "./apiOperations";
-import { PlusCircleFilled, PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleFilled } from "@ant-design/icons";
 import AddIndividualTask from "./AddIndividualTask";
 import IndividualTaskOperations from "./IndividualTaskOperations";
+import StateContext from "./StateChangeContext";
+import SingleProjectPageheader from "./SingleProjectPageheader";
+
 const SingleProjectDetails = ({ data }) => {
   const {
     setSelectedProject,
@@ -16,43 +17,44 @@ const SingleProjectDetails = ({ data }) => {
     selectedProject,
     setSelectedTask,
   } = useContext(StateContext);
+
   let [isAddTaskVisible, setIsAddTaskVisible] = useState(false);
-  console.log(tasks, "in the single page ");
-  console.log("the selected project is :", selectedProject);
   useEffect(() => {
     setIsAddTaskVisible(false);
   }, [selectedProject]);
   const { project } = useParams();
-  console.log(data, "rerendering");
 
   let [projectSelected] = projects.filter((element) => {
     return element.id === project;
   });
+
   if (!projectSelected) {
     return <div>Project not found!</div>;
   }
+
   let projectTasks = tasks.filter(
     (element) => element.projectId == projectSelected.id
   );
-  //console.log(projectTasks, "in the selected tasks","the project is is ",projectSelected.id,project);
-  //selectedProject(projectSelected.id);
-  //console.log("The selected project is ",projectSelected.name);
 
   function handleMyProjects() {
     setSelectedProject("");
   }
+
   function handleNameChange(newtext) {
     console.log(newtext);
     projectSelected = { ...projectSelected, name: newtext };
     updateProjectTodo(projectSelected, setProjects, projects);
   }
+
   function showAddTask() {
     setIsAddTaskVisible(true);
     setSelectedTask("");
   }
+
   function closeAddtask() {
     setIsAddTaskVisible(false);
   }
+
   return (
     <>
       <SingleProjectPageheader handleMyProjects={handleMyProjects} />
@@ -65,8 +67,6 @@ const SingleProjectDetails = ({ data }) => {
           >
             {projectSelected.name}
           </Typography.Title>
-          {/* <p>{JSON.stringify(projectTasks)}</p> */}
-          {/* <Checkbox>Checkbox</Checkbox> */}
           {projectTasks.map((element) => (
             <div>
               <IndividualTaskOperations element={element} />
@@ -76,7 +76,7 @@ const SingleProjectDetails = ({ data }) => {
           {isAddTaskVisible && (
             <div className="border p-5 rounded-lg border-black">
               <AddIndividualTask
-                projects={projects}
+                
                 onCancel={closeAddtask}
                 selectedProject={projectSelected.id}
               />

@@ -1,22 +1,22 @@
-import React, { createContext } from "react";
-import { useState, useEffect } from "react";
-//import { getAllProjects, getAllTasks } from
+import { useState, useEffect, createContext } from "react";
 import { getAllProjects, getAllTasks } from "./apiOperations";
-
 const StateContext = createContext();
-export const StateChangeContext = ({children}) => {
+
+export const StateChangeContext = ({ children }) => {
+  
   const [projects, setProjects] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [selectedProject, setSelectedProject] = useState("");
   const [loading, setLoading] = useState(true);
+ 
+  const [tasks, setTasks] = useState([]);
   const [taskLoading, setTaskLoading] = useState(true);
+  const [selectedTask, setSelectedTask] = useState("");
+
   useEffect(() => {
     getAllProjects(setProjects, setLoading);
     getAllTasks(setTasks, setTaskLoading);
   }, []);
-  console.log("the tasks are :", tasks);
 
-  const [selectedProject, setSelectedProject] = useState("");
-  const [selectedTask, setSelectedTask] = useState("");
   return (
     <StateContext.Provider
       value={{
