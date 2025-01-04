@@ -21,6 +21,7 @@ const App = () => {
       </Splitter.Panel>
       <Splitter.Panel>
         <Routes>
+          <Route index element={<MyProjects data={withoutInbox} />} />
           <Route
             path="/myprojects"
             element={<MyProjects data={withoutInbox} />}
