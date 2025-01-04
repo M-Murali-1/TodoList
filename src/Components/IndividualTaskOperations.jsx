@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Checkbox, Dropdown } from "antd";
+import { Checkbox, Dropdown, message } from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { closeTaskTodo } from "./apiOperations";
 import MoreOptionsModelTask from "./MoreOptionsModelTask";
@@ -19,6 +19,7 @@ const IndividualTaskOperations = ({ element }) => {
   }
   function handleChecked(e) {
     closeTaskTodo(e.target.value, tasks, setTasks);
+    message.success(`Task "${element.content}" marked as completed!`); 
   }
 
   return (
