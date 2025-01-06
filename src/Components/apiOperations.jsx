@@ -1,43 +1,36 @@
 import { TodoistApi } from "@doist/todoist-api-typescript";
 const api = new TodoistApi("14e22f56fadd08cdc9be1df7443ca10afaf40262");
 
-export function addProjectTodo(newProject, setProjects, projects) {
+export function addProjectTodo(newProject, projectDispatch) {
   console.log(newProject);
-  
+
   api
     .addProject(newProject)
     .then((project) => {
-      setProjects((prev) => [...prev, project]);
+      projectDispatch({ type: "ADD_PROJECT", payload: project });
     })
     .catch((error) => console.log(error));
 }
 
-export function removeProjectTodo(projectID, projects, setProjects) {
+export function removeProjectTodo(projectID, projectDispatch) {
   api
     .deleteProject(projectID)
     .then((isSuccess) => {
-      let data = projects.filter((element) => element.id !== projectID);
-      setProjects(data);
+      projectDispatch({ type: "REMOVE_PROJECT", payload: projectID });
     })
     .catch((error) => console.log(error));
 }
 
-export function updateIsFavorite(projectID, status, projects, setProjects) {
+export function updateIsFavorite(projectID, status, projectDispatch) {
   api
     .updateProject(projectID, { isFavorite: `${!status}` })
     .then((isSuccess) => {
-      let data = projects.map((element) => {
-        if (element.id === projectID) {
-          return isSuccess;
-        }
-        return element;
-      });
-      setProjects(data);
+      projectDispatch({ type: "UPDATE_PROJECT", payload: isSuccess });
     })
     .catch((error) => console.log(error));
 }
 
-export function updateProjectTodo(project, setProjects, projects) {
+export function updateProjectTodo(project, projectDispatch) {
   api
     .updateProject(project.id, {
       name: project.name,
@@ -45,13 +38,7 @@ export function updateProjectTodo(project, setProjects, projects) {
       color: project.color,
     })
     .then((isSuccess) => {
-      let data = projects.map((element) => {
-        if (element.id === project.id) {
-          return isSuccess;
-        }
-        return element;
-      });
-      setProjects(data);
+      projectDispatch({ type: "UPDATE_PROJECT", payload: isSuccess });
     })
     .catch((error) => console.log(error));
 }
@@ -61,23 +48,24 @@ export function findFavourites(data) {
   return updated;
 }
 
-export function getAllProjects(setProjects, setLoading) {
+export function getAllProjects(projectDispatch) {
   api
     .getProjects()
     .then((projects) => {
-      setProjects(projects);
-      setLoading(false);
+      projectDispatch({ type: "ADD_ALL_PROJECTS", payload: projects });
+      projectDispatch({ type: "UPDATE_LOADING" });
     })
     .catch((error) => console.log(error));
 }
 
-export function getAllTasks(setTasks, setTaskLoading) {
+export function getAllTasks(taskDispatch) {
   api
     .getTasks()
     .then((tasks) => {
       console.log(tasks);
-      setTasks(tasks);
-      setTaskLoading(false);
+
+      taskDispatch({ type: "ADD_All_TASKS", payload: tasks });
+      taskDispatch({ type: "UPDATE_LOADING" });
     })
     .catch((error) => console.log(error));
 }
@@ -103,28 +91,29 @@ export function filterData(data, value) {
   return searchData;
 }
 
-export function addTaskTodo(task, tasks, setTasks) {
+export function addTaskTodo(task, taskDispatch) {
   api
     .addTask(task)
     .then((addedTask) => {
       console.log(addedTask);
-      setTasks((prev) => [...prev, addedTask]);
+      taskDispatch({ type: "ADD_TASK", payload: addedTask });
     })
     .catch((error) => console.log(error.message));
 }
 
-export function removeTaskTodo(taskID, tasks, setTasks) {
+export function removeTaskTodo(taskID, taskDispatch) {
   api
     .deleteTask(taskID)
     .then((isSuccess) => {
       console.log(isSuccess);
-      let updatedTasks = tasks.filter((element) => element.id != taskID);
-      setTasks(updatedTasks);
+      taskDispatch({ type: "REMOVE_TASK", payload: taskID });
     })
     .catch((error) => console.log(error));
 }
 
-export function updateTaskTodo(task, tasks, setTasks) {
+export function updateTaskTodo(task, taskDispatch) {
+  console.log("the updation of the task");
+
   api
     .updateTask(task.id, {
       content: task.content,
@@ -133,25 +122,18 @@ export function updateTaskTodo(task, tasks, setTasks) {
     })
     .then((isSuccess) => {
       console.log(isSuccess);
-      let updated = tasks.map((element) => {
-        if (element.id === task.id) {
-          return isSuccess;
-        } else {
-          return element;
-        }
-      });
-      setTasks(updated);
+      taskDispatch({ type: "UPDATE_TASK", payload: isSuccess });
     })
     .catch((error) => console.log(error));
 }
 
-export function closeTaskTodo(taskID, tasks, setTasks) {
+export function closeTaskTodo(taskID, taskDispatch) {
   api
     .closeTask(taskID)
     .then((isSuccess) => {
       console.log(isSuccess);
-      let updated = tasks.filter((element) => element.id != taskID);
-      setTasks(updated);
+
+      taskDispatch({ type: "REMOVE_TASK", payload: taskID });
     })
     .catch((error) => console.log(error));
 }

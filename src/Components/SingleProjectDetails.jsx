@@ -8,47 +8,40 @@ import IndividualTaskOperations from "./IndividualTaskOperations";
 import StateContext from "./StateChangeContext";
 import SingleProjectPageheader from "./SingleProjectPageheader";
 
-const SingleProjectDetails = ({ data }) => {
-  const {
-    setSelectedProject,
-    setProjects,
-    projects,
-    tasks,
-    selectedProject,
-    setSelectedTask,
-  } = useContext(StateContext);
+const SingleProjectDetails = () => {
+  const { projectDispatch, taskDispatch, projectState, taskState } =
+    useContext(StateContext);
 
   let [isAddTaskVisible, setIsAddTaskVisible] = useState(false);
   useEffect(() => {
     setIsAddTaskVisible(false);
-  }, [selectedProject]);
+  }, [projectState.selectedProject]);
   const { project } = useParams();
 
-  let [projectSelected] = projects.filter((element) => {
+  let [projectSelected] = projectState.projects.filter((element) => {
     return element.id === project;
   });
 
   if (!projectSelected) {
     return <div>Project not found!</div>;
   }
-
-  let projectTasks = tasks.filter(
+  let projectTasks = taskState.tasks.filter(
     (element) => element.projectId == projectSelected.id
   );
 
   function handleMyProjects() {
-    setSelectedProject("");
+    projectDispatch({ type: "UPDATE_SELECTED", payload: "" });
   }
 
   function handleNameChange(newtext) {
     console.log(newtext);
     projectSelected = { ...projectSelected, name: newtext };
-    updateProjectTodo(projectSelected, setProjects, projects);
+    updateProjectTodo(projectSelected, projectDispatch);
   }
 
   function showAddTask() {
     setIsAddTaskVisible(true);
-    setSelectedTask("");
+    taskDispatch({ type: "UPDATE_SELECTED", payload: "" });
   }
 
   function closeAddtask() {
@@ -76,7 +69,6 @@ const SingleProjectDetails = ({ data }) => {
           {isAddTaskVisible && (
             <div className="border p-5 rounded-lg border-black">
               <AddIndividualTask
-                
                 onCancel={closeAddtask}
                 selectedProject={projectSelected.id}
               />

@@ -8,8 +8,10 @@ import MyProjects from "./Components/MyProjects";
 import SingleProjectDetails from "./Components/SingleProjectDetails";
 
 const App = () => {
-  const { projects } = useContext(StateContext);
-  const withoutInbox = getWithoutInbox(projects);
+  const {  projectState, taskState } = useContext(StateContext);
+  const withoutInbox = getWithoutInbox(projectState.projects);
+  console.log("Inide of the app", projectState, taskState);
+
   return (
     <Splitter
       style={{
@@ -28,7 +30,7 @@ const App = () => {
           />
           <Route
             path="/myprojects/:project"
-            element={<SingleProjectDetails data={withoutInbox} />}
+            element={<SingleProjectDetails />}
           />
         </Routes>
       </Splitter.Panel>

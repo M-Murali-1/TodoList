@@ -6,16 +6,18 @@ import Projects from "./Projects";
 import AddTask from "./AddTask";
 import StateContext from "./StateChangeContext";
 const SidenavItems = () => {
-  const { projects, selectedProject, setSelectedProject, loading } =
-    useContext(StateContext);
+  const { projectState } = useContext(StateContext);
 
-  let inbox = getInbox(projects);
-  if (loading) {
+  if (projectState.projectLoading) {
     return <h1>Loading</h1>;
   }
+  let inbox = getInbox(projectState.projects);
   return (
     <div className="flex flex-col p-3 min-h-full  bg-sidenav">
-      <AddTask data={projects} selectedProject={selectedProject} />
+      <AddTask
+        data={projectState.projects}
+        selectedProject={projectState.selectedProject}
+      />
       <Index data={inbox[0]} />
       <Favourites />
       <Projects />

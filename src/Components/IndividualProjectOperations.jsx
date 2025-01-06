@@ -8,11 +8,11 @@ import { findFavourites } from "./apiOperations";
 const IndividualProject = ({type=""}) => {
   const navigate = useNavigate();
 
-  const { selectedProject, setSelectedProject,projects } = useContext(StateContext);
+  const {projectDispatch,projectState } = useContext(StateContext);
   
-  let data = (type=="favourites")?findFavourites(projects):projects;
+  let data = (type=="favourites")?findFavourites(projectState.projects):projectState.projects;
   function handleSelectedProject(element) {
-    setSelectedProject(element.id);
+    projectDispatch({type:"UPDATE_SELECTED",payload:element.id})
     navigate(`/myprojects/${element.id}`);
   }
 
@@ -26,7 +26,7 @@ const IndividualProject = ({type=""}) => {
               key={element.id}
               onClick={() => handleSelectedProject(element)}
               className={`group  cursor-pointer flex justify-between items-baseline px-2 py-1 rounded-lg ${
-                selectedProject === element.id
+                projectState.selectedProject === element.id
                   ? "bg-select_sidenav"
                   : "hover:bg-hover_sidenav"
               }`}
@@ -35,7 +35,7 @@ const IndividualProject = ({type=""}) => {
                 <p className={`text-${element.color} text-lg`}># </p>
                 <p
                   className={`${
-                    selectedProject === element.id ? "text-red" : ""
+                    projectState.selectedProject === element.id ? "text-red" : ""
                   }`}
                 >
                   {element.name}

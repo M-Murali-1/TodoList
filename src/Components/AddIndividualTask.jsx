@@ -10,7 +10,9 @@ const AddIndividualTask = ({
   initial = { content: "", description: "", projectId: selectedProject },
   okButton = "Add Task",
 }) => {
-  const { tasks, setTasks, projects } = useContext(StateContext);
+  
+  
+  const { projectState, taskDispatch } = useContext(StateContext);
   const [task, setTask] = useState(initial);
 
   function handleNameChange(e) {
@@ -21,15 +23,17 @@ const AddIndividualTask = ({
   }
   function handleSubmit() {
     if (initial.id != undefined) {
-      updateTaskTodo(task, tasks, setTasks);
+      updateTaskTodo(task, taskDispatch);
     } else {
-      addTaskTodo(task, tasks, setTasks);
+      addTaskTodo(task, taskDispatch);
     }
     onCancel();
   }
   function handleProjectChange(value) {
     setTask({ ...task, projectId: value });
   }
+  console.log("hello",selectedProject);
+  
   return (
     <>
       <div>
@@ -56,7 +60,7 @@ const AddIndividualTask = ({
           defaultValue={task.projectId}
           onChange={handleProjectChange}
         >
-          {projects.map((element) => (
+          {projectState.projects.map((element) => (
             <Option value={element.id} key={element.id}>
               {element.name}
             </Option>

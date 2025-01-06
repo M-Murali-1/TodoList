@@ -3,14 +3,14 @@ import StateContext from "./StateChangeContext";
 import { useContext } from "react";
 const Index = ({ data }) => {
   function handleInboxChange() {
-    setSelectedProject(data.id);
+    projectDispatch({ type: "UPDATE_SELECTED", payload: data.id });
   }
-  const { selectedProject, setSelectedProject } = useContext(StateContext);
+  const { projectDispatch, projectState } = useContext(StateContext);
 
   return (
     <div
       className={`flex gap-3 cursor-pointer p-2 rounded-lg ${
-        selectedProject === data.id
+        projectState.selectedProject === data.id
           ? "bg-select_sidenav text-red"
           : "hover:bg-hover_sidenav"
       }`}

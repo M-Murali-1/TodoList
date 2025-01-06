@@ -12,7 +12,7 @@ import {
 
 const MoreOptionsModel = ({ element }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { projects, setProjects } = useContext(StateContext);
+  const { projectDispatch } = useContext(StateContext);
 
   // Function for enabling the model.
   const showModal = () => {
@@ -33,12 +33,7 @@ const MoreOptionsModel = ({ element }) => {
           <div
             className="flex gap-5 "
             onClick={() => {
-              updateIsFavorite(
-                element.id,
-                element.isFavorite,
-                projects,
-                setProjects
-              );
+              updateIsFavorite(element.id, element.isFavorite, projectDispatch);
             }}
           >
             {element.isFavorite ? <HeartFilled /> : <HeartOutlined />}
@@ -51,7 +46,7 @@ const MoreOptionsModel = ({ element }) => {
         <Menu.Item key="3">
           <div
             className="flex gap-5 text-red"
-            onClick={() => removeProjectTodo(element.id, projects, setProjects)}
+            onClick={() => removeProjectTodo(element.id, projectDispatch)}
           >
             <DeleteOutlined />
             <p>Delete</p>

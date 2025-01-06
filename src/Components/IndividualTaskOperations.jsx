@@ -6,24 +6,26 @@ import MoreOptionsModelTask from "./MoreOptionsModelTask";
 import AddIndividualTask from "./AddIndividualTask";
 import StateContext from "./StateChangeContext";
 const IndividualTaskOperations = ({ element }) => {
-  const { selectedProject, tasks, setTasks, selectedTask, setSelectedTask } =
+  const { projectDispatch, taskDispatch, projectState, taskState } =
     useContext(StateContext);
   const [editable, setEditable] = useState(false);
 
   function handleEdit() {
     setEditable(true);
-    setSelectedTask(element.id);
+    console.log("Updating the task");
+    
+    taskDispatch({ type: "UPDATE_SELECTED", payload: element.id });
   }
   function handleCancel() {
     setEditable(false);
   }
   function handleChecked(e) {
-    closeTaskTodo(e.target.value, tasks, setTasks);
+    closeTaskTodo(e.target.value, taskDispatch);
   }
 
   return (
     <>
-      {!(editable && selectedTask == element.id) && (
+      {!(editable && taskState.selectedTask == element.id) && (
         <div className="flex justify-between group ">
           <Checkbox
             key={element.id}
@@ -49,10 +51,10 @@ const IndividualTaskOperations = ({ element }) => {
           </div>
         </div>
       )}
-      {editable && selectedTask === element.id && (
+      {editable && taskState.selectedTask === element.id && (
         <AddIndividualTask
           onCancel={handleCancel}
-          selectedProject={selectedProject}
+          selectedProject={projectState.selectedProject}
           initial={element}
           okButton="Update Task"
         />

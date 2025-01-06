@@ -4,14 +4,14 @@ import StateContext from "./StateChangeContext";
 import { DeleteOutlined } from "@ant-design/icons";
 import { removeTaskTodo } from "./apiOperations";
 const MoreOptionsModelTask = ({ element }) => {
-  const { tasks, setTasks } = useContext(StateContext);
+  const { taskDispatch } = useContext(StateContext);
   return (
     <div>
       <Menu>
         <Menu.Item key="1">
           <div
             className="flex gap-5 text-red"
-            onClick={() => removeTaskTodo(element.id, tasks, setTasks)}
+            onClick={() => removeTaskTodo(element.id, taskDispatch)}
           >
             <DeleteOutlined />
             <p>Delete</p>

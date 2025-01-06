@@ -13,14 +13,14 @@ const ModelForProject = ({
 }) => {
   const [project, setProject] = useState(initial);
   // Calling the handlingstate change function which will reload the page again.
-  const { projects, setProjects } = useContext(StateContext);
+  const { projectDispatch } = useContext(StateContext);
 
   const handleOk = () => {
     setIsModalOpen(false);
     if (project.id != undefined) {
-      updateProjectTodo(project, setProjects, projects);
+      updateProjectTodo(project, projectDispatch);
     } else {
-      addProjectTodo(project, setProjects, projects);
+      addProjectTodo(project, projectDispatch);
     }
     setProject(initial);
   };
