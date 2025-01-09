@@ -15,6 +15,8 @@ const MyProjects = ({ data }) => {
     setSearchText(value);
   }
   let searchData = data;
+  console.log(searchData,"this is the search data");
+  
   if (searchText != "") {
     searchData = data.filter((element) =>
       element.name.toLowerCase().includes(searchText.toLowerCase())

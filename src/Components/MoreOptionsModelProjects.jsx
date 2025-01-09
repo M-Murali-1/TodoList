@@ -1,7 +1,6 @@
 import ModelForProject from "./ModelForProject";
-import StateContext from "./StateChangeContext";
 import { Menu } from "antd";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { removeProjectTodo, updateIsFavorite } from "./apiOperations";
 import {
   EditOutlined,
@@ -9,11 +8,11 @@ import {
   HeartOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
 
 const MoreOptionsModel = ({ element }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { projectDispatch } = useContext(StateContext);
-
+const dispatch = useDispatch();
   // Function for enabling the model.
   const showModal = () => {
     setIsModalOpen(true);
@@ -33,7 +32,7 @@ const MoreOptionsModel = ({ element }) => {
           <div
             className="flex gap-5 "
             onClick={() => {
-              updateIsFavorite(element.id, element.isFavorite, projectDispatch);
+              updateIsFavorite(element.id, element.isFavorite,dispatch);
             }}
           >
             {element.isFavorite ? <HeartFilled /> : <HeartOutlined />}
@@ -46,7 +45,7 @@ const MoreOptionsModel = ({ element }) => {
         <Menu.Item key="3">
           <div
             className="flex gap-5 text-red"
-            onClick={() => removeProjectTodo(element.id, projectDispatch)}
+            onClick={() => removeProjectTodo(element.id,dispatch)}
           >
             <DeleteOutlined />
             <p>Delete</p>

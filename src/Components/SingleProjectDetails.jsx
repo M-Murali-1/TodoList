@@ -1,47 +1,53 @@
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "antd";
 import { updateProjectTodo } from "./apiOperations";
 import { PlusCircleFilled } from "@ant-design/icons";
 import AddIndividualTask from "./AddIndividualTask";
 import IndividualTaskOperations from "./IndividualTaskOperations";
-import StateContext from "./StateChangeContext";
 import SingleProjectPageheader from "./SingleProjectPageheader";
-
+import { useDispatch, useSelector } from "react-redux";
+import { projectSelected, taskSelected } from "../features/selectedItemsSlice";
 const SingleProjectDetails = () => {
-  const { projectDispatch, taskDispatch, projectState, taskState } =
-    useContext(StateContext);
-
+  const projectss = useSelector((state) => state.project);
+  console.log(projectss);
+  const dispatch = useDispatch();
+  const { projects, tasks, selectedProject } = useSelector((state) => ({
+    projects: state.project.projects,
+    tasks: state.task.tasks,
+    selectedProject: state.selected.selectedProject,
+  }));
   let [isAddTaskVisible, setIsAddTaskVisible] = useState(false);
   useEffect(() => {
     setIsAddTaskVisible(false);
-  }, [projectState.selectedProject]);
+  }, [selectedProject]);
   const { project } = useParams();
 
-  let [projectSelected] = projectState.projects.filter((element) => {
+  let [projectClicked] = projects.filter((element) => {
     return element.id === project;
   });
 
-  if (!projectSelected) {
+  if (!projectClicked) {
     return <div>Project not found!</div>;
   }
-  let projectTasks = taskState.tasks.filter(
-    (element) => element.projectId == projectSelected.id
+  let projectTasks = tasks.filter(
+    (element) => element.projectId == projectClicked.id
   );
 
   function handleMyProjects() {
-    projectDispatch({ type: "UPDATE_SELECTED", payload: "" });
-  }
+    dispatch(projectSelected(""));
+   }
 
   function handleNameChange(newtext) {
     console.log(newtext);
-    projectSelected = { ...projectSelected, name: newtext };
-    updateProjectTodo(projectSelected, projectDispatch);
+    projectClicked = { ...projectClicked, name: newtext };
+    updateProjectTodo(projectClicked, dispatch);
   }
 
   function showAddTask() {
     setIsAddTaskVisible(true);
-    taskDispatch({ type: "UPDATE_SELECTED", payload: "" });
+    dispatch(taskSelected(""));
+   
   }
 
   function closeAddtask() {
@@ -58,7 +64,7 @@ const SingleProjectDetails = () => {
             className="text-2xl"
             editable={{ onChange: handleNameChange }}
           >
-            {projectSelected.name}
+            {projectClicked.name}
           </Typography.Title>
           {projectTasks.map((element) => (
             <div>
@@ -70,7 +76,7 @@ const SingleProjectDetails = () => {
             <div className="border p-5 rounded-lg border-black">
               <AddIndividualTask
                 onCancel={closeAddtask}
-                selectedProject={projectSelected.id}
+                selectedProject={projectClicked.id}
               />
             </div>
           )}

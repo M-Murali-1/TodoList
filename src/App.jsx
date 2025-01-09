@@ -1,16 +1,25 @@
 import { Splitter } from "antd";
-import { useContext } from "react";
+import { useEffect } from "react";
 import SidenavItems from "./Components/SidenavItems";
 import { getWithoutInbox } from "./Components/apiOperations";
-import StateContext from "./Components/StateChangeContext";
 import { Route, Routes } from "react-router-dom";
 import MyProjects from "./Components/MyProjects";
 import SingleProjectDetails from "./Components/SingleProjectDetails";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects } from "./features/projectSlice";
+import { fetchTasks } from "./features/taskSlice";
 const App = () => {
-  const {  projectState, taskState } = useContext(StateContext);
-  const withoutInbox = getWithoutInbox(projectState.projects);
-  console.log("Inide of the app", projectState, taskState);
+  const projects = useSelector((state) => state.project.projects);
+  const withoutInbox = getWithoutInbox(projects);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchProjects());
+    dispatch(fetchTasks());
+  }, []);
+  const allProjects = useSelector((state) => state.project);
+  const allTasks = useSelector((state) => state.task);
+  const allSelected = useSelector((state) => state.selected);
+  console.log(allProjects, allTasks, allSelected, "total projects");
 
   return (
     <Splitter

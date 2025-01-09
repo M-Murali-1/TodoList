@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import { useState } from "react";
 import Input from "antd/es/input/Input";
 import { Button, Select } from "antd";
 import { addTaskTodo, updateTaskTodo } from "./apiOperations";
-import StateContext from "./StateChangeContext";
+import { useDispatch, useSelector } from "react-redux";
 const { Option } = Select;
 const AddIndividualTask = ({
   onCancel,
@@ -10,9 +10,9 @@ const AddIndividualTask = ({
   initial = { content: "", description: "", projectId: selectedProject },
   okButton = "Add Task",
 }) => {
-  
-  
-  const { projectState, taskDispatch } = useContext(StateContext);
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.project.projects);
+  console.log("within the individual add task :", projects);
   const [task, setTask] = useState(initial);
 
   function handleNameChange(e) {
@@ -23,17 +23,17 @@ const AddIndividualTask = ({
   }
   function handleSubmit() {
     if (initial.id != undefined) {
-      updateTaskTodo(task, taskDispatch);
+      updateTaskTodo(task, dispatch);
     } else {
-      addTaskTodo(task, taskDispatch);
+      addTaskTodo(task, dispatch);
     }
     onCancel();
   }
   function handleProjectChange(value) {
     setTask({ ...task, projectId: value });
   }
-  console.log("hello",selectedProject);
-  
+  console.log("hello", selectedProject);
+
   return (
     <>
       <div>
@@ -60,7 +60,7 @@ const AddIndividualTask = ({
           defaultValue={task.projectId}
           onChange={handleProjectChange}
         >
-          {projectState.projects.map((element) => (
+          {projects.map((element) => (
             <Option value={element.id} key={element.id}>
               {element.name}
             </Option>

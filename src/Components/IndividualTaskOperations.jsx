@@ -1,31 +1,34 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Checkbox, Dropdown } from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { closeTaskTodo } from "./apiOperations";
 import MoreOptionsModelTask from "./MoreOptionsModelTask";
 import AddIndividualTask from "./AddIndividualTask";
-import StateContext from "./StateChangeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { taskSelected } from "../features/selectedItemsSlice";
 const IndividualTaskOperations = ({ element }) => {
-  const { projectDispatch, taskDispatch, projectState, taskState } =
-    useContext(StateContext);
+  const dispatch = useDispatch();
+  const { selectedProject, selectedTask } = useSelector((state) => ({
+    selectedProject: state.selected.selectedProject,
+    selectedTask: state.selected.selectedTask,
+  }));
   const [editable, setEditable] = useState(false);
 
   function handleEdit() {
     setEditable(true);
     console.log("Updating the task");
-    
-    taskDispatch({ type: "UPDATE_SELECTED", payload: element.id });
+    dispatch(taskSelected(element.id));
   }
   function handleCancel() {
     setEditable(false);
   }
   function handleChecked(e) {
-    closeTaskTodo(e.target.value, taskDispatch);
+    closeTaskTodo(e.target.value, dispatch);
   }
 
   return (
     <>
-      {!(editable && taskState.selectedTask == element.id) && (
+      {!(editable && selectedTask == element.id) && (
         <div className="flex justify-between group ">
           <Checkbox
             key={element.id}
@@ -51,10 +54,10 @@ const IndividualTaskOperations = ({ element }) => {
           </div>
         </div>
       )}
-      {editable && taskState.selectedTask === element.id && (
+      {editable && selectedTask === element.id && (
         <AddIndividualTask
           onCancel={handleCancel}
-          selectedProject={projectState.selectedProject}
+          selectedProject={selectedProject}
           initial={element}
           okButton="Update Task"
         />

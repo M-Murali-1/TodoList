@@ -1,12 +1,11 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import ModelForProject from "./ModelForProject";
 import { useNavigate } from "react-router-dom";
-
-import StateContext from "./StateChangeContext";
+import { useDispatch } from "react-redux";
+import { projectSelected } from "../features/selectedItemsSlice";
 const SidenavContentHeaders = () => {
-  const { projectDispatch } = useContext(StateContext);
-
+  const dispatch = useDispatch();
   const initial = { name: "", isFavorite: false, color: "charcoal" };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = (e) => {
@@ -22,7 +21,7 @@ const SidenavContentHeaders = () => {
         className="flex justify-between"
         onClick={() => {
           navigate("/myprojects");
-          projectDispatch({ type: "UPDATE_SELECTED", payload: "" });
+          dispatch(projectSelected(""));
         }}
       >
         <p>My Projects</p>

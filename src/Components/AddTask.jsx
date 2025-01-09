@@ -1,13 +1,17 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import AddIndividualTask from "./AddIndividualTask";
-import StateContext from "./StateChangeContext";
+import { useSelector } from "react-redux";
 const AddTask = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
-  const { projectState } = useContext(StateContext);
+  const selectedProject = useSelector(
+    (state) => state.selected.selectedProject
+  );
+  console.log("the selected project within add task is :", selectedProject);
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -34,7 +38,7 @@ const AddTask = () => {
         >
           <AddIndividualTask
             onCancel={closeModal}
-            selectedProject={projectState.selectedProject}
+            selectedProject={selectedProject}
           />
         </Modal>
       )}

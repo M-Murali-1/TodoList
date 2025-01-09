@@ -1,8 +1,8 @@
 import { Modal } from "antd";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { addProjectTodo, updateProjectTodo } from "./apiOperations";
 import AddProject from "./AddProject";
-import StateContext from "./StateChangeContext";
+import { useDispatch } from "react-redux";
 
 const ModelForProject = ({
   isModalOpen,
@@ -13,14 +13,14 @@ const ModelForProject = ({
 }) => {
   const [project, setProject] = useState(initial);
   // Calling the handlingstate change function which will reload the page again.
-  const { projectDispatch } = useContext(StateContext);
 
+  const dispatch = useDispatch();
   const handleOk = () => {
     setIsModalOpen(false);
     if (project.id != undefined) {
-      updateProjectTodo(project, projectDispatch);
+      updateProjectTodo(project, dispatch);
     } else {
-      addProjectTodo(project, projectDispatch);
+      addProjectTodo(project, dispatch);
     }
     setProject(initial);
   };

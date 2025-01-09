@@ -1,16 +1,24 @@
 import { InboxOutlined } from "@ant-design/icons";
-import StateContext from "./StateChangeContext";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { projectSelected } from "../features/selectedItemsSlice";
 const Index = ({ data }) => {
   function handleInboxChange() {
-    projectDispatch({ type: "UPDATE_SELECTED", payload: data.id });
+    console.log("trail:", data.id);
+    dispatch(projectSelected(data.id));
   }
-  const { projectDispatch, projectState } = useContext(StateContext);
+  const dispatch = useDispatch();
+  const selectedProject = useSelector(
+    (state) => state.selected.selectedProject
+  );
+  console.log(
+    "the selected project inside the index folder :",
+    selectedProject
+  );
 
   return (
     <div
       className={`flex gap-3 cursor-pointer p-2 rounded-lg ${
-        projectState.selectedProject === data.id
+        selectedProject === data.id
           ? "bg-select_sidenav text-red"
           : "hover:bg-hover_sidenav"
       }`}

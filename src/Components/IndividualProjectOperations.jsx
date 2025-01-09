@@ -1,18 +1,25 @@
-import { useContext } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
 import MoreOptionsModel from "./MoreOptionsModelProjects";
 import { useNavigate } from "react-router-dom";
-import StateContext from "./StateChangeContext";
 import { findFavourites } from "./apiOperations";
-const IndividualProject = ({type=""}) => {
+import { useDispatch, useSelector } from "react-redux";
+import { projectSelected } from "../features/selectedItemsSlice";
+const IndividualProject = ({ type = "" }) => {
   const navigate = useNavigate();
 
-  const {projectDispatch,projectState } = useContext(StateContext);
-  
-  let data = (type=="favourites")?findFavourites(projectState.projects):projectState.projects;
+  const dispatch = useDispatch();
+  const { projects, selectedProject } = useSelector((state) => ({
+    projects: state.project.projects,
+    selectedProject: state.selected.selectedProject,
+  }));
+  console.log("the selected project is :", selectedProject);
+
+  let data = type == "favourites" ? findFavourites(projects) : projects;
   function handleSelectedProject(element) {
-    projectDispatch({type:"UPDATE_SELECTED",payload:element.id})
+    console.log("clicked on the item i.e,", element);
+
+    dispatch(projectSelected(element.id));
     navigate(`/myprojects/${element.id}`);
   }
 
@@ -26,7 +33,7 @@ const IndividualProject = ({type=""}) => {
               key={element.id}
               onClick={() => handleSelectedProject(element)}
               className={`group  cursor-pointer flex justify-between items-baseline px-2 py-1 rounded-lg ${
-                projectState.selectedProject === element.id
+                selectedProject === element.id
                   ? "bg-select_sidenav"
                   : "hover:bg-hover_sidenav"
               }`}
@@ -35,7 +42,7 @@ const IndividualProject = ({type=""}) => {
                 <p className={`text-${element.color} text-lg`}># </p>
                 <p
                   className={`${
-                    projectState.selectedProject === element.id ? "text-red" : ""
+                    selectedProject === element.id ? "text-red" : ""
                   }`}
                 >
                   {element.name}
