@@ -3,16 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { projectSelected } from "../features/selectedItemsSlice";
 const Index = ({ data }) => {
   function handleInboxChange() {
-    console.log("trail:", data.id);
     dispatch(projectSelected(data.id));
   }
   const dispatch = useDispatch();
   const selectedProject = useSelector(
     (state) => state.selected.selectedProject
-  );
-  console.log(
-    "the selected project inside the index folder :",
-    selectedProject
   );
 
   return (

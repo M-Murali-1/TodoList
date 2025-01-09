@@ -16,10 +16,6 @@ const App = () => {
     dispatch(fetchProjects());
     dispatch(fetchTasks());
   }, []);
-  const allProjects = useSelector((state) => state.project);
-  const allTasks = useSelector((state) => state.task);
-  const allSelected = useSelector((state) => state.selected);
-  console.log(allProjects, allTasks, allSelected, "total projects");
 
   return (
     <Splitter

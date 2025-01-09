@@ -16,7 +16,6 @@ const IndividualTaskOperations = ({ element }) => {
 
   function handleEdit() {
     setEditable(true);
-    console.log("Updating the task");
     dispatch(taskSelected(element.id));
   }
   function handleCancel() {

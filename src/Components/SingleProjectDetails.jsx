@@ -9,8 +9,6 @@ import SingleProjectPageheader from "./SingleProjectPageheader";
 import { useDispatch, useSelector } from "react-redux";
 import { projectSelected, taskSelected } from "../features/selectedItemsSlice";
 const SingleProjectDetails = () => {
-  const projectss = useSelector((state) => state.project);
-  console.log(projectss);
   const dispatch = useDispatch();
   const { projects, tasks, selectedProject } = useSelector((state) => ({
     projects: state.project.projects,
@@ -39,7 +37,6 @@ const SingleProjectDetails = () => {
    }
 
   function handleNameChange(newtext) {
-    console.log(newtext);
     projectClicked = { ...projectClicked, name: newtext };
     updateProjectTodo(projectClicked, dispatch);
   }

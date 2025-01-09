@@ -13,12 +13,8 @@ const IndividualProject = ({ type = "" }) => {
     projects: state.project.projects,
     selectedProject: state.selected.selectedProject,
   }));
-  console.log("the selected project is :", selectedProject);
-
   let data = type == "favourites" ? findFavourites(projects) : projects;
   function handleSelectedProject(element) {
-    console.log("clicked on the item i.e,", element);
-
     dispatch(projectSelected(element.id));
     navigate(`/myprojects/${element.id}`);
   }

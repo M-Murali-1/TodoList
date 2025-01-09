@@ -10,8 +10,6 @@ const AddTask = () => {
   const selectedProject = useSelector(
     (state) => state.selected.selectedProject
   );
-  console.log("the selected project within add task is :", selectedProject);
-
   const showModal = () => {
     setIsModalVisible(true);
   };

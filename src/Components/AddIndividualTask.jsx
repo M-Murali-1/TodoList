@@ -12,7 +12,6 @@ const AddIndividualTask = ({
 }) => {
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.project.projects);
-  console.log("within the individual add task :", projects);
   const [task, setTask] = useState(initial);
 
   function handleNameChange(e) {
@@ -32,8 +31,6 @@ const AddIndividualTask = ({
   function handleProjectChange(value) {
     setTask({ ...task, projectId: value });
   }
-  console.log("hello", selectedProject);
-
   return (
     <>
       <div>
